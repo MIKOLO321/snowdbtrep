@@ -14,6 +14,20 @@ CREATE OR REPLACE TABLE emp_basic (
    AUTO_SUSPEND = 180
    AUTO_RESUME = TRUE
    INITIALLY_SUSPENDED=TRUE;
-   create stage sf_tuts.public.%emp_basic ;
    SELECT CURRENT_WAREHOUSE();
-   PUT file://C:\temp\employees0*.csv @sf_tuts.public.%emp_basic;
+   PUT file:///workspaces/snowdbtrep/employees0*.csv @sf_tuts.public.%emp_basic;
+    LIST @sf_tuts.public.%emp_basic;
+    COPY INTO emp_basic
+  FROM @%emp_basic
+  FILE_FORMAT = (type = csv field_optionally_enclosed_by='"')
+  PATTERN = '.*employees0[1-5].csv.gz'
+  ON_ERROR = 'skip_file';
+
+  SELECT * FROM emp_basic;
+  INSERT INTO emp_basic VALUES
+   ('Clementine','Adamou','cadamou@sf_tuts.com','10510 Sachs Road','Klenak','2017-9-22') ,
+   ('Marlowe','De Anesy','madamouc@sf_tuts.co.uk','36768 Northfield Plaza','Fangshan','2017-1-26');
+
+SELECT email FROM emp_basic WHERE email LIKE '%.uk';
+SELECT LAST_NAME FROM emp_basic WHERE LAST_NAME like 'H%';
+SELECT first_name, last_name, DATEADD('day',90,start_date) FROM emp_basic WHERE start_date <= '2017-01-01';

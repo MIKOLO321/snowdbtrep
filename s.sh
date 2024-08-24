@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+SNOWSQL_ACCOUNT=hhezgea-ch79666
+SNOWSQL_USER=MIKOLO777
+SNOWSQL_DATABASE=CLOUD_DATA_DB.
+SNOWSQL_SCHEMA=public
+SNOWSQL_WAREHOUSE=compute_wh
+SNOWSQL_PWD=Westman123.
+sql_script=C:\\workspaces/snowdbtrep/exec.sql
+
+
+snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER -d $SNOWSQL_DATABASE -s $SNOWSQL_SCHEMA -w $SNOWSQL_WAREHOUSE -p $SNOWSQL_PWD -f $sql_script
+
